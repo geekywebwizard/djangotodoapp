@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title%} Edit Todo list {% endblock%}
+
+
+{% block content%}
+
+
+    {% if 'item.item' %}
+        <form  method="POST"  class="d-flex ms-auto me-auto col-md-10" style=" padding:35px; margin-top: 25px; background-color:lightsteelblue; border-radius: 3px;;">
+            {% csrf_token%}
+            <input class="form-control me-2" type="search" placeholder=" {{item.item}}" aria-label="Search" name="item" value=" {{item.item}} " required>
+            <input type="hidden" value="{{item.completed}}" name="completed">
+        </form>
+
+       
+
+    {% endif %}
+
+{% endblock %}

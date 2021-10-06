@@ -1,0 +1,69 @@
+
+{% extends 'base.html'%}
+
+
+{%block content%}
+
+<form  action="{% url 'home' %}" method="POST"  class="d-flex ms-auto me-auto col-md-10" style=" padding:35px; margin-top: 25px; background-color:lightsteelblue; border-radius: 3px;;">
+    {% csrf_token%}
+    <input class="form-control me-2" type="search" placeholder="Enter New Task and Hit Enter" aria-label="Search" name="item" required>
+</form>
+
+
+<div class="container col-md-8" style="margin-top: 25px;">
+
+{% if messages %}
+
+    {%for message in messages%}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+      
+    {%endfor%}
+
+{% endif %}
+
+</br>
+</br>
+
+{% if all_item%}
+
+    
+
+    <table class="table table-bordered">
+        <thead>
+        <tr class="table-dark">
+            <th scope="col">Task List</th>
+            <th scope="col"><center>Status</center></th>
+            <th scope="col"><center>Action</center></th>
+        </tr>
+        </thead>
+        <tbody>
+        
+            {% for x in all_item %}
+                {% if x.completed%}
+                    <tr class="table-secondary">
+                        <td class="striker"><a href="{% url 'edit' x.id %}"> {{x.item}}</a> </td>
+                        <td> <center><a href="{% url 'uncross' x.id %}"> Uncross </a></center></td>
+                        <td> <center><a href="{% url 'delete' x.id %}"><button class="btn btn-outline-success" type="submit"> Delete </button></a> </center></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td> <a href="{% url 'edit' x.id %}"> {{x.item}}</a> </td>
+                        <td> <center><a href="{% url 'crossoff' x.id %}"> Crossoff</a></center></td>
+                        <td> <center><a href="{% url 'delete' x.id %}"><button class="btn btn-outline-success" type="submit"> Delete </button></a> </center></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+
+
+{% endif%}
+
+
+{%endblock%}
